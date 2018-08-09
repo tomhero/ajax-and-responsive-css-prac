@@ -1,0 +1,161 @@
+html {
+    font-size: 62.5%; /* เพื่อให้ 1rem มีค่าประมาณ 10px */
+}
+
+body {
+    font-size: 1.4em; /* มีค่าประมาณ 14px */
+    font-family: 'Exo 2';
+}
+
+#warpper {
+    max-width: 96%;
+    margin: 0 auto;
+}
+
+.song-data {
+    background-color: beige;
+} 
+
+.song-data > pre {
+    padding-left: 1em;
+    overflow-y: hidden; /* cool!! */
+}
+
+.song-title {
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+/* mobile first start here */ 
+@media screen and (min-width: 320px) {
+    /* Add your styles for devices with a minimum width of 320 */
+    .header-warp {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 3.2rem;
+        text-align: center;
+    }
+    
+    .search-area {
+        font-size: 1.4rem;
+        margin-bottom: 0.75em;
+    }
+
+    #song-searh-box {
+        font-size: 1.5em;
+        width: 97%;
+        height: 3.35rem;
+        padding-left: 0.25em;
+        margin-bottom: 0.5em;
+        border: 2.25px solid black;
+    }
+    
+    #seach-btn {
+        font-size: 1.5em;
+        width: 100%;
+        border: none;
+        height: 4rem;
+        background-color: cadetblue;
+        color: whitesmoke;
+    }
+
+    #song-data-warp {
+        display: grid;
+        grid-template-columns: minmax(250px, auto);
+        grid-auto-flow: row;
+        grid-gap: 1em;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* Add your styles for devices with a minimum width of 768 */
+    .header-warp {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        justify-items: center;
+        grid-column-gap: 1em;
+    }
+    
+    h1 {
+        font-size: 2.6rem;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+    }
+    
+    .search-area {
+        width: 100%;
+        font-size: 1.4rem;
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        grid-column-gap: 1em;
+        margin-bottom: 0px;
+        height: auto;
+    }
+
+    #song-searh-box {
+        margin-bottom: 0px;
+        font-size: 1.5em;
+        width: 98%;
+    }
+
+    #song-data-warp {
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
+    }
+    
+}
+
+@media screen and (min-width: 1024px) {
+    #song-data-warp {
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    h1 {
+        justify-self: start;
+    }
+
+    .header-warp {
+        grid-template-columns: 2fr 9fr;
+        margin-top: 0.5em;
+    }
+
+}
+
+@media screen and (min-width: 1920px) {
+    #song-data-warp {
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
+    }
+
+    h1 {
+        justify-self: center;
+    }
+
+    .search-area {
+        grid-template-columns: 8fr 1fr;
+        margin-bottom: 0.5em;
+    }
+
+    .header-warp {
+        margin-top: 1em;
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    #song-data-warp {
+        grid-template-columns: repeat(5, minmax(250px, 1fr));
+    }
+
+    .search-area {
+        grid-template-columns: 10fr 1fr;
+        margin-bottom: 0.5em;
+    }
+
+    .header-warp {
+        margin-top: 1.25em;
+    }
+}

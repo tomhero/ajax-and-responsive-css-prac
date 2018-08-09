@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Random Song</title>
+</head>
+
+<body>
+    <div id="warpper">
+        <div class="header-warp">
+            <h1> Musik Time!! </h1>
+            <div class="search-area">
+                <input type="text" name="song-input" id="song-searh-box" placeholder="song name">
+                <button id="seach-btn"> Seach </button>
+            </div>
+        </div>
+        <hr>
+        <div class="result-title">
+            <h3> R E S U L T : </h3>
+        </div>
+        <div id="song-data-warp" class="song-area">
+        </div>
+    </div>
+</body>
+
+<script>
+    // IIFE - Immediately Invoked Function Expression
+    (function ($, window, document) {
+
+        // The $ is now locally scoped 
+
+        // Listen for the jQuery ready event on the document
+        $(function () {
+            const $searchButton = $('#seach-btn')
+            // The DOM is ready!
+            $('h1').text('Musik Time Begins!!')
+            const searchSong = "zombie"
+            let result = []
+
+            $searchButton.click((e) => {
+                const word = $('#song-searh-box').val()
+
+                if (word.length > 2) {
+                    getSong(word)
+                        .done((data) => {
+
+                            if (data.length === 0) {
+                                $('#raw-song-data').text('not found')
+                            } else {
+                                const jsonString = JSON.stringify(data, null, 2)
+                                $('#raw-song-data').text(jsonString)
+                            }
+
+                            for (const song of data) {
+                                const songDataString = JSON.stringify(song, null, 2)
+                                const $songDiv = `<div class="song-data">
+                                <h3 class="song-title"> ${song.artist.name} - ${song.title} </h3>
+                                <pre>${songDataString}</pre>
+                                </div>`
+                                $('#song-data-warp').append($songDiv)
+                            }
+                        })
+                } else {
+                    $('#raw-song-data').text('please fill out more than 2 letters')
+                }
+            })
+        })
+
+        // The rest of the code goes here!
+
+    }(window.jQuery, window, document))
+    // The global jQuery object is passed as a parameter
+
+    function getSong(keyWord) {
+        const dynamicData = {};
+        dynamicData.pattern = keyWord;
+        return $.ajax({
+            dataType: "json",
+            url: "http://www.songsterr.com/a/ra/songs.json",
+            type: "get",
+            data: dynamicData
+        })
+    }
+</script>
+
+</html>
