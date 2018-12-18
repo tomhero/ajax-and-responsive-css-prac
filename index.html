@@ -48,9 +48,11 @@
 
                 if (word.length > 2) {
                     $songDatas.text('searching...')
-                    getSong(word)
-                        .done((data) => {
-
+                    fetchSong(word)
+                        .then(rawData => {
+                            return rawData.json()
+                        })
+                        .then(data => {
                             if (data.length === 0) {
                                 $songDatas.text('not found')
                                 return
@@ -88,6 +90,13 @@
             data: dynamicData
         })
     }
+
+    function fetchSong(keyWord) {
+        const dynamicData = {};
+        return fetch(`${url}?pattern=${keyWord}`)
+    }
+
 </script>
 
 </html>
+
