@@ -34,7 +34,7 @@
     // IIFE - Immediately Invoked Function Expression
     (function ($, window, document) {
 
-        // The $ is now locally scoped 
+        // The $ is now locally scoped
 
         // Listen for the jQuery ready event on the document
         $(function () {
@@ -42,6 +42,23 @@
             const $songDatas = $('#song-data-warp')
             // The DOM is ready!
             $('h1').text('Musik Time Begins!!')
+
+            function makeSongFields(data) {
+                if (data.length === 0) {
+                    $songDatas.text('not found')
+                    return
+                }
+
+                $songDatas.text('')
+                for (const song of data) {
+                    const songDataString = JSON.stringify(song, null, 2)
+                    const $songDiv = `<div class="song-data">
+                    <h3 class="song-title"> ${song.artist.name} - ${song.title} </h3>
+                    <pre>${songDataString}</pre>
+                    </div>`
+                    $songDatas.append($songDiv)
+                }
+            }
 
             $searchButton.click((e) => {
                 const word = $('#song-searh-box').val()
@@ -53,21 +70,10 @@
                             return rawData.json()
                         })
                         .then(data => {
-                            if (data.length === 0) {
-                                $songDatas.text('not found')
-                                return
-                            }
-
-                            $songDatas.text('')
-                            for (const song of data) {
-                                const songDataString = JSON.stringify(song, null, 2)
-                                const $songDiv = `<div class="song-data">
-                                <h3 class="song-title"> ${song.artist.name} - ${song.title} </h3>
-                                <pre>${songDataString}</pre>
-                                </div>`
-                                $songDatas.append($songDiv)
-                            }
+                            makeSongFields(data)
                         })
+                        .catch(error => $songDatas.text('Error!!'))
+                        .finally(() => console.log('finish searching')) // beware of this
                 } else {
                     $songDatas.text('please fill out more than 2 letters')
                 }
